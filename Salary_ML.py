@@ -71,10 +71,10 @@ def find_optimal_lm_mod(X, y, cutoffs, test_size = .30, random_state=42, plot=Tr
         X_train, X_test, y_train, y_test = train_test_split(reduce_X, y, test_size = test_size, random_state=random_state)
 
         #fit the model and obtain pred response
-        lm_model = LinearRegression(normalize=True)
-        lm_model.fit(X_train, y_train)
-        y_test_preds = lm_model.predict(X_test)
-        y_train_preds = lm_model.predict(X_train)
+        model = LinearRegression(normalize=True)
+        model.fit(X_train, y_train)
+        y_test_preds = model.predict(X_test)
+        y_train_preds = model.predict(X_train)
 
         #append the r2 value from the test set
         r2_scores_test.append(r2_score(y_test, y_test_preds))
@@ -100,10 +100,10 @@ def find_optimal_lm_mod(X, y, cutoffs, test_size = .30, random_state=42, plot=Tr
     X_train, X_test, y_train, y_test = train_test_split(reduce_X, y, test_size = test_size, random_state=random_state)
 
     #fit the model
-    lm_model = LinearRegression(normalize=True)
-    lm_model.fit(X_train, y_train)
+    model = LinearRegression(normalize=True)
+    model.fit(X_train, y_train)
 
-    return r2_scores_test, r2_scores_train, lm_model, X_train, X_test, y_train, y_test
+    return r2_scores_test, r2_scores_train, model, X_train, X_test, y_train, y_test
 
 def main():
     df = pd.read_csv('../Part1/stackoverflow/survey_results_public.csv')
@@ -112,9 +112,9 @@ def main():
     #Therefore, lower values for the cutoff provides more predictors in the model.
     cutoffs = [5000, 3500, 2500, 1000, 100, 50, 30, 20, 10, 5]
 
-    r2_scores_test, r2_scores_train, lm_model, X_train, X_test, y_train, y_test = find_optimal_lm_mod(X, y, cutoffs, plot=False)
-    print('Finished Finding the Best Model')
-    return lm_model
+    r2_scores_test, r2_scores_train, model, X_train, X_test, y_train, y_test = find_optimal_lm_mod(X, y, cutoffs, plot=False)
+    print('Finished Finding the Best Model of Linear Model')
+    return model
 
 
 if __name__ == '__main__':
